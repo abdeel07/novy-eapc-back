@@ -1,0 +1,54 @@
+package io.novelis.novyeapc.entities;
+
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import io.novelis.novyeapc.entities.enums.InterviewType;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
+
+import javax.persistence.*;
+import java.io.Serializable;
+import java.util.Date;
+import java.util.Set;
+
+@Entity
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+@EqualsAndHashCode(exclude = {"fulfillments", "quizzes"})
+public class Interview implements Serializable {
+
+    private static final long serialVersionUID = 1L;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    private InterviewType type;
+
+    @Column(nullable = false)
+    @JsonFormat(shape =  JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy")
+    private Date date;
+
+    @OneToMany(mappedBy = "interview")
+    @JsonManagedReference(value="interview-fulfillment")
+    @OnDelete(action = OnDeleteAction.CASCADE)
+    private Set<Fulfillment> fulfillments;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "collaborator_id", nullable = false)
+    @JsonBackReference(value="collaborator-interview")
+    private Collaborator collaborator;
+
+    @OneToMany(mappedBy = "interview")
+    @JsonManagedReference(value="interview-quiz")
+    @OnDelete(action = OnDeleteAction.CASCADE)
+    private Set<Quiz> quizzes;
+
+}
