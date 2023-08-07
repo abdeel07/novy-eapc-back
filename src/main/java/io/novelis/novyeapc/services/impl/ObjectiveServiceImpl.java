@@ -61,7 +61,7 @@ public class ObjectiveServiceImpl implements ObjectiveService {
     public ObjectiveResponse get(Long id) {
         Objective objective = objectiveRepository.findById(id).get();
 
-        if(objective==null)
+        if (objective == null)
             return null;
 
         return ObjectiveMapper.INSTANCE.objectiveToObjectiveResponse(objective);
@@ -71,7 +71,7 @@ public class ObjectiveServiceImpl implements ObjectiveService {
     public ObjectiveResponse update(Long id, ObjectiveRequest objectiveRequest) {
         Optional<Objective> findObjective = objectiveRepository.findById(id);
 
-        if(!findObjective.isPresent())
+        if (!findObjective.isPresent())
             return null;
 
         Objective objective = findObjective.get();
@@ -92,7 +92,7 @@ public class ObjectiveServiceImpl implements ObjectiveService {
     public void delete(Long id) {
         Optional<Objective> findObjective = objectiveRepository.findById(id);
 
-        if(!findObjective.isPresent()){
+        if (!findObjective.isPresent()) {
             //throw new exception
         }
 
