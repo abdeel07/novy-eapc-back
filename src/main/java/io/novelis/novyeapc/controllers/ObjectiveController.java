@@ -72,7 +72,7 @@ public class ObjectiveController {
     }
 
     @GetMapping("date")
-    public  ResponseEntity<Map<String, Object>> getByDate(
+    public  ResponseEntity<Map<String, Object>> StartDateAndEndDate(
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "5") int size,
             @RequestParam(defaultValue = "") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate startDate,
@@ -82,6 +82,18 @@ public class ObjectiveController {
 
         return new ResponseEntity<>
                 (objectiveService.searchByStartDateAndEndDateBetween(startDate, endDate, pageable), HttpStatus.OK);
+    }
+
+    @GetMapping("date/{year}")
+    public  ResponseEntity<Map<String, Object>> getByYear(
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "5") int size,
+            @PathVariable(value = "year") int year){
+
+        Pageable pageable = PageRequest.of(page, size);
+
+        return new ResponseEntity<>
+                (objectiveService.searchByYear(year, pageable), HttpStatus.OK);
     }
 
     @GetMapping("collaborator")
@@ -106,5 +118,18 @@ public class ObjectiveController {
 
         return new ResponseEntity<>
                 (objectiveService.searchByInterviewType(interviewType, pageable), HttpStatus.OK);
+    }
+
+    @GetMapping("collaborator-interview")
+    public  ResponseEntity<Map<String, Object>> getByCollaboratorIdAndInterviewType(
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "5") int size,
+            @RequestParam(defaultValue = "") Long id,
+            @RequestParam(defaultValue = "") InterviewType interviewType){
+
+        Pageable pageable = PageRequest.of(page, size);
+
+        return new ResponseEntity<>
+                (objectiveService.searchByCollaboratorIdAndInterviewType(id, interviewType, pageable), HttpStatus.OK);
     }
 }
