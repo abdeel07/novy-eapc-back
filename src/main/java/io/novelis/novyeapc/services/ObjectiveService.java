@@ -25,5 +25,9 @@ public interface ObjectiveService {
 
     Map<String, Object> searchByInterviewType(InterviewType interviewType, Pageable pageable);
 
+    Map<String, Object> searchByCollaboratorIdAndInterviewType(Long collaboratorId, InterviewType interviewType, Pageable pageable);
+
+    Map<String, Object> searchByYear(int year, Pageable pageable);
+
     Map<String, Object> searchByStartDateAndEndDateBetween(LocalDate startDate, LocalDate endDate, Pageable pageable);
 }
