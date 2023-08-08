@@ -2,10 +2,7 @@ package io.novelis.novyeapc.controllers;
 
 import io.novelis.novyeapc.models.requests.FulfillmentRequest;
 import io.novelis.novyeapc.models.responses.FulfillmentResponse;
-import io.novelis.novyeapc.models.responses.InterviewResponse;
 import io.novelis.novyeapc.services.impl.FulfillmentServiceImpl;
-import io.novelis.novyeapc.services.impl.InterviewServiceImpl;
-import org.apache.kafka.common.errors.ResourceNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -15,6 +12,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api")
+@CrossOrigin(origins = { "http://localhost:3000" })
 public class FulfillmentController {
     @Autowired
     FulfillmentServiceImpl fulfillmentService;

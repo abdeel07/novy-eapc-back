@@ -16,6 +16,7 @@ import java.util.Map;
 
 @RestController
 @RequestMapping("/api/collaborator/")
+@CrossOrigin(origins = { "http://localhost:3000" })
 public class CollaboratorController {
 
     @Autowired
