@@ -19,6 +19,8 @@ public class InterviewRequest {
 
     private Date date;
 
+    private String notice;
+
     private Set<QuizRequest> quizzes;
 
     private Set<FulfillmentRequest> fulfillments;

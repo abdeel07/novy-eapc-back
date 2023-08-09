@@ -36,6 +36,8 @@ public class Interview implements Serializable {
     @JsonFormat(shape =  JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy")
     private Date date;
 
+    private String notice;
+
     @OneToMany(mappedBy = "interview")
     @JsonManagedReference(value="interview-fulfillment")
     @OnDelete(action = OnDeleteAction.CASCADE)
