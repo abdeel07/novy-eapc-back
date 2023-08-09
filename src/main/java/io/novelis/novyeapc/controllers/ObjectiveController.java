@@ -125,11 +125,12 @@ public class ObjectiveController {
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "5") int size,
             @RequestParam(defaultValue = "") Long id,
+            @RequestParam(value = "year") int year,
             @RequestParam(defaultValue = "") InterviewType interviewType){
 
         Pageable pageable = PageRequest.of(page, size);
 
         return new ResponseEntity<>
-                (objectiveService.searchByCollaboratorIdAndInterviewType(id, interviewType, pageable), HttpStatus.OK);
+                (objectiveService.searchByCollaboratorIdAndInterviewTypeAndYear(id, interviewType,year, pageable), HttpStatus.OK);
     }
 }

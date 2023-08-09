@@ -134,10 +134,10 @@ public class ObjectiveServiceImpl implements ObjectiveService {
     }
 
     @Override
-    public Map<String, Object> searchByCollaboratorIdAndInterviewType(Long collaboratorId, InterviewType interviewType, Pageable pageable) {
+    public Map<String, Object> searchByCollaboratorIdAndInterviewTypeAndYear(Long collaboratorId, InterviewType interviewType,int year, Pageable pageable) {
         List<ObjectiveResponse> responses = new ArrayList<>();
 
-        Page<Objective> objectives = objectiveRepository.findByCollaboratorIdAndInterviewType(collaboratorId, interviewType, pageable);
+        Page<Objective> objectives = objectiveRepository.findByCollaboratorIdAndInterviewTypeAndYear(collaboratorId, interviewType, year,pageable);
 
         responses = ObjectiveMapper.INSTANCE.mapObjective(objectives.toList());
 
