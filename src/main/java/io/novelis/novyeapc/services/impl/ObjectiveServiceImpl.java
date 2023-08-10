@@ -168,7 +168,7 @@ public class ObjectiveServiceImpl implements ObjectiveService {
     }
 
     @Override
-    public Map<String, Object> searchByStartDateAndEndDateBetween(LocalDate startDate, LocalDate endDate, Pageable pageable) {
+    public Map<String, Object> searchByStartDateAndEndDateBetween(Date startDate, Date endDate, Pageable pageable) {
         List<ObjectiveResponse> responses = new ArrayList<>();
 
         Page<Objective> objectives = objectiveRepository.findByStartDateAndEndDateBetween(startDate, endDate, pageable);
