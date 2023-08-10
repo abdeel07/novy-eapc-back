@@ -54,4 +54,9 @@ public class Objective implements Serializable {
     @JsonBackReference(value="collaborator-objective")
     @OnDelete(action = OnDeleteAction.CASCADE)
     private Collaborator collaborator;
+
+    @ManyToOne
+    @JoinColumn(name = "interview_id")
+    @JsonBackReference(value="interview-objective")
+    private Interview interview;
 }

@@ -22,6 +22,8 @@ public class ObjectiveRequest {
 
     private Long collaboratorId;
 
+    private Long interviewId;
+
     private String comment;
 
     private String status;

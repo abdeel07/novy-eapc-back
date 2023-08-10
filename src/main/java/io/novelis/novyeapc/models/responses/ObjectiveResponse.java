@@ -24,6 +24,10 @@ public class ObjectiveResponse {
 
     private Long collaboratorId;
 
+    private String collaboratorName;
+
+    private Long interviewId;
+
     private String comment;
 
     private String status;
