@@ -29,10 +29,7 @@ public class ObjectiveController {
 
     @PostMapping()
     public ResponseEntity<ObjectiveResponse> add(@RequestBody @Valid ObjectiveRequest objectiveRequest){
-//        CollaboratorResponse collaboratorResponse= collaboratorService.get(collaborator_id);
-//        if(collaboratorResponse.getId()==null){
-//            new ResourceNotFoundException("Not found collaborator="+collaborator_id);
-//        }
+
         ObjectiveResponse objectiveResponse = objectiveService.add(objectiveRequest);
 
         return new ResponseEntity<>(objectiveResponse, HttpStatus.CREATED);

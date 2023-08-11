@@ -39,17 +39,16 @@ public class Interview implements Serializable {
     private String notice;
 
     @OneToMany(mappedBy = "interview")
-    @JsonManagedReference(value="interview-fulfillment")
     @OnDelete(action = OnDeleteAction.CASCADE)
     private Set<Fulfillment> fulfillments;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "collaborator_id", nullable = false)
-    @JsonBackReference(value="collaborator-interview")
+    @ManyToOne
+    @JoinColumn(name = "collaborator_id", referencedColumnName = "id",nullable = true)
+    @OnDelete(action = OnDeleteAction.CASCADE)
     private Collaborator collaborator;
 
-    @OneToMany(mappedBy = "interview")
-    @JsonManagedReference(value="interview-quiz")
+
+    @OneToMany(mappedBy = "interview"     )
     @OnDelete(action = OnDeleteAction.CASCADE)
     private Set<Quiz> quizzes;
 

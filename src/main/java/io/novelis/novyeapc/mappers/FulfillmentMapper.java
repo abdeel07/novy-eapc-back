@@ -19,7 +19,8 @@ public interface FulfillmentMapper {
 
     FulfillmentMapper INSTANCE = Mappers.getMapper(FulfillmentMapper.class);
     InterviewMapper interviewMapper = InterviewMapper.INSTANCE;
-//    @Mapping(target = "interview" ,source = "interviewResponse")
+
+    @Mapping(target = "interview.id", source="interviewId")
     Fulfillment fulfillmentRequestToFulfillment(FulfillmentRequest fulfillmentRequest);
     @Mapping(target = "interview", source = "interview")
 
