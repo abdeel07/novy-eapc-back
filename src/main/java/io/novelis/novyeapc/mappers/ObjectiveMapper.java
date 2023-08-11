@@ -5,10 +5,7 @@ import io.novelis.novyeapc.entities.Interview;
 import io.novelis.novyeapc.entities.Objective;
 import io.novelis.novyeapc.models.requests.ObjectiveRequest;
 import io.novelis.novyeapc.models.responses.ObjectiveResponse;
-import org.mapstruct.InjectionStrategy;
-import org.mapstruct.Mapper;
-import org.mapstruct.Mapping;
-import org.mapstruct.ReportingPolicy;
+import org.mapstruct.*;
 import org.mapstruct.factory.Mappers;
 
 import java.util.List;
@@ -39,4 +36,7 @@ public interface ObjectiveMapper {
     }
 
     List<ObjectiveResponse> mapObjective(List<Objective> objectives);
+
+    @Mapping(target = "id", ignore = true) // Don't map the id field
+    void updateObjectiveFromRequest(ObjectiveRequest request, @MappingTarget Objective objective);
 }
