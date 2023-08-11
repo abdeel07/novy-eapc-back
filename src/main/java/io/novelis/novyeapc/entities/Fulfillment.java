@@ -29,9 +29,8 @@ public class Fulfillment implements Serializable {
     @Column(nullable = false)
     private String comment;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     @JoinColumn(name = "interview_id", nullable = false)
-    @JsonBackReference(value="interview-fulfillment")
     @OnDelete(action = OnDeleteAction.CASCADE)
     private Interview interview;
 
