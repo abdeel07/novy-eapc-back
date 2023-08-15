@@ -1,5 +1,6 @@
 package io.novelis.novyeapc.models.requests;
 
+import io.novelis.novyeapc.entities.Objective;
 import io.novelis.novyeapc.entities.enums.InterviewType;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -24,6 +25,8 @@ public class InterviewRequest {
     private Set<QuizRequest> quizzes;
 
     private Set<FulfillmentRequest> fulfillments;
+
+    private Set<Long> objectivesId;
 
     private Long collaboratorId;
 

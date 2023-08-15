@@ -20,6 +20,7 @@ public interface InterviewMapper {
 
     @Mapping(target = "fulfillments", source = "fulfillments")
     @Mapping(target = "quizzes", source = "quizzes")
+    @Mapping(target = "objectives", ignore = true)
     Interview interviewRequestToInterview(InterviewRequest interviewRequest);
 
     default Set<Fulfillment> mapFulfillmentRequestsToEntities(Set<FulfillmentRequest> fulfillmentRequests) {
@@ -38,8 +39,8 @@ public interface InterviewMapper {
 
     @Mapping(source = "collaborator.id", target = "collaboratorId")
     @Mapping(source = "objectives", target = "objectives")
-    @Mapping(source = "fulfillments", target = "fulfillments")
-    @Mapping(source = "quizzes", target = "quizzes")
+    @Mapping( target = "fulfillments",ignore = true)
+    @Mapping(target = "quizzes",ignore = true)
     @Mapping(source = "collaborator", target = "collaboratorName")
     InterviewResponse interviewToInterviewResponse(Interview interview);
 
