@@ -63,7 +63,7 @@ public class ObjectiveController {
     public ResponseEntity<ObjectiveResponse> update(
             @PathVariable Long id,
             @RequestBody @Valid ObjectiveRequest objectiveRequest
-    ){
+    ) throws Exception {
         ObjectiveResponse objectiveResponse = objectiveService.update(id, objectiveRequest);
 
         return new ResponseEntity<>(objectiveResponse, HttpStatus.OK);
