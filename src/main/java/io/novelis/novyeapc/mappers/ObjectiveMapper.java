@@ -37,7 +37,4 @@ public interface ObjectiveMapper {
 
     List<ObjectiveResponse> mapObjective(List<Objective> objectives);
 
-    @Mapping(target = "id", ignore = true) // Don't map the id field
-    @Mapping(source = "collaboratorId", target = "collaborator")
-    void updateObjectiveFromRequest(ObjectiveRequest request, @MappingTarget Objective objective);
 }

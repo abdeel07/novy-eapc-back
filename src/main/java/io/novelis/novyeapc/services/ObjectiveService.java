@@ -18,7 +18,7 @@ public interface ObjectiveService {
 
     ObjectiveResponse get(Long id);
 
-    ObjectiveResponse update(Long id, ObjectiveRequest objectiveRequest);
+    ObjectiveResponse update(Long id, ObjectiveRequest objectiveRequest) throws Exception;
 
     void delete(Long id);
 

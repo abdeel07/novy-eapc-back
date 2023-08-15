@@ -11,6 +11,7 @@ import io.novelis.novyeapc.repositories.InterviewRepository;
 import io.novelis.novyeapc.repositories.ObjectiveRepository;
 import io.novelis.novyeapc.services.ObjectiveService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.crossstore.ChangeSetPersister;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -68,21 +69,20 @@ public class ObjectiveServiceImpl implements ObjectiveService {
     }
 
     @Override
-    public ObjectiveResponse update(Long id, ObjectiveRequest objectiveRequest) {
+    public ObjectiveResponse update(Long id, ObjectiveRequest objectiveRequest) throws Exception {
         Optional<Objective> findObjective = objectiveRepository.findById(id);
 
         if (!findObjective.isPresent())
             return null;
 
         Objective objective = findObjective.get(); // Get the existing Objective entity
-        ObjectiveMapper.INSTANCE.updateObjectiveFromRequest(objectiveRequest, objective);
 
         // Handle Collaborator entity if needed
-//        if (objectiveRequest.getCollaboratorId() != null) {
-//            Collaborator collaborator = collaboratorRepository.findById(objectiveRequest.getCollaboratorId())
-//                    .orElseThrow(() -> new EntityNotFoundException("Collaborator not found"));
-//            objective.setCollaborator(collaborator);
-//        }
+        if (objectiveRequest.getCollaboratorId() != null) {
+            Collaborator collaborator = collaboratorRepository.findById(objectiveRequest.getCollaboratorId())
+                    .orElseThrow(() -> new Exception("Collaborator not found"));
+            objective.setCollaborator(collaborator);
+        }
 
         return ObjectiveMapper.INSTANCE.objectiveToObjectiveResponse
                 (objectiveRepository.save(objective));
