@@ -37,6 +37,8 @@ public interface InterviewMapper {
 
 //    @Mapping(target = "fulfillments", expression = "java(fulfillmentMapper.fulfillmentSetToFulfillmentResponseSet(interview.getFulfillments()))")
     //@Mapping(target = "fulfillments", ignore = true)
+    @Mapping(target = "fulfillments" ,ignore = true)
+    @Mapping(target = "quizzes",ignore = true)
     @Mapping(source = "collaborator.id", target = "collaboratorId")
     InterviewResponse interviewToInterviewResponse(Interview interview);
 
