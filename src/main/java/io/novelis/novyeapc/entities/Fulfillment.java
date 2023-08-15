@@ -26,7 +26,8 @@ public class Fulfillment implements Serializable {
 
     @Column(nullable = false)
     private String title;
-    @Column(nullable = false)
+
+    @Column(nullable = true)
     private String comment;
 
     @ManyToOne
