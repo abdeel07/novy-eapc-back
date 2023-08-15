@@ -75,7 +75,8 @@ public class ObjectiveServiceImpl implements ObjectiveService {
         if (!findObjective.isPresent())
             return null;
 
-        Objective objective = findObjective.get(); // Get the existing Objective entity
+        Objective objective = ObjectiveMapper.INSTANCE.objectiveRequestToObjective(objectiveRequest);
+        objective.setId(id);
 
         // Handle Collaborator entity if needed
         if (objectiveRequest.getCollaboratorId() != null) {
