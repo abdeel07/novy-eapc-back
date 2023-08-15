@@ -1,19 +1,14 @@
 package io.novelis.novyeapc.services.impl;
 
-import io.novelis.novyeapc.entities.Collaborator;
-import io.novelis.novyeapc.entities.Fulfillment;
-import io.novelis.novyeapc.entities.Interview;
-import io.novelis.novyeapc.entities.Quiz;
+import io.novelis.novyeapc.entities.*;
 import io.novelis.novyeapc.entities.enums.InterviewType;
 import io.novelis.novyeapc.mappers.InterviewMapper;
 import io.novelis.novyeapc.models.requests.FulfillmentRequest;
 import io.novelis.novyeapc.models.requests.InterviewRequest;
+import io.novelis.novyeapc.models.requests.ObjectiveRequest;
 import io.novelis.novyeapc.models.requests.QuizRequest;
 import io.novelis.novyeapc.models.responses.InterviewResponse;
-import io.novelis.novyeapc.repositories.CollaboratorRepository;
-import io.novelis.novyeapc.repositories.FulfillmentRepository;
-import io.novelis.novyeapc.repositories.InterviewRepository;
-import io.novelis.novyeapc.repositories.QuizRepository;
+import io.novelis.novyeapc.repositories.*;
 import io.novelis.novyeapc.services.CollaboratorService;
 import io.novelis.novyeapc.services.InterviewService;
 import org.apache.kafka.common.errors.ResourceNotFoundException;
@@ -37,6 +32,9 @@ public class InterviewServiceImpl implements InterviewService {
     FulfillmentRepository fulfillmentRepository;
     @Autowired
     QuizRepository quizRepository;
+
+    @Autowired
+    ObjectiveRepository objectiveRepository;
 
     @Override
     public Map<String, Object> getAll(Pageable pageable) {
@@ -83,6 +81,16 @@ public class InterviewServiceImpl implements InterviewService {
                 quiz.setAnswer(quizRequest.getAnswer());
                 quiz.setQuestion(quizRequest.getQuestion());
                 quizRepository.save(quiz);
+
+            }
+        }
+        System.out.println(interviewRequest.getObjectivesId());
+        if (interviewRequest.getObjectivesId() != null) {
+            for (Long objectiveId : interviewRequest.getObjectivesId()) {
+                Objective objective = objectiveRepository.findById(objectiveId).get();
+                objective.setInterview(savedInterview);
+                objectiveRepository.save(objective);
+
 
             }
         }
