@@ -29,7 +29,6 @@ public class Quiz {
 
     @ManyToOne
     @JoinColumn(name = "interview_id", nullable = false)
-    @JsonBackReference(value="interview-quiz")
     @OnDelete(action = OnDeleteAction.CASCADE)
     private Interview interview;
 
