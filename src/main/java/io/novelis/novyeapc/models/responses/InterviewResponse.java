@@ -30,4 +30,6 @@ public class InterviewResponse {
 
     private Long collaboratorId;
 
+    private String collaboratorName;
+
 }

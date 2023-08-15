@@ -9,6 +9,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import java.time.LocalDate;
+import java.util.Date;
 
 @Repository
 public interface ObjectiveRepository extends JpaRepository<Objective,Long> {
@@ -21,7 +22,7 @@ public interface ObjectiveRepository extends JpaRepository<Objective,Long> {
     Page<Objective> findByCollaboratorIdAndInterviewTypeAndYear(Long collaboratorId, InterviewType interviewType,int year, Pageable pageable);
 
     @Query("SELECT o FROM Objective o WHERE o.startDate BETWEEN :startDate AND :endDate AND o.endDate BETWEEN :startDate AND :endDate")
-    Page<Objective> findByStartDateAndEndDateBetween(LocalDate startDate, LocalDate endDate, Pageable pageable);
+    Page<Objective> findByStartDateAndEndDateBetween(Date startDate, Date endDate, Pageable pageable);
 
     @Query("SELECT o FROM Objective o WHERE YEAR(o.startDate) = ?1 OR YEAR(o.endDate) = ?1")
     Page<Objective> findByDate(int year, Pageable pageable);

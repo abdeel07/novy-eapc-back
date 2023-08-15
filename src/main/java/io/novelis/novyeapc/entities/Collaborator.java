@@ -25,7 +25,8 @@ import java.util.Set;
         "staffing", "absences", "collaborators", "tasks", "documents", "imputations", "validations", })
 @NoArgsConstructor
 @AllArgsConstructor
-@Data
+@Getter
+@Setter
 public class Collaborator implements Serializable {
 
     private static final long serialVersionUID = 1L;

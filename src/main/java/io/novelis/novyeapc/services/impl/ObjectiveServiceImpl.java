@@ -74,15 +74,15 @@ public class ObjectiveServiceImpl implements ObjectiveService {
         if (!findObjective.isPresent())
             return null;
 
-        Objective objective = findObjective.get();
+        Objective objective = findObjective.get(); // Get the existing Objective entity
+        ObjectiveMapper.INSTANCE.updateObjectiveFromRequest(objectiveRequest, objective);
 
-        objective.setAchievement(objectiveRequest.getAchievement());
-        objective.setComment(objectiveRequest.getComment());
-        objective.setStatus(objectiveRequest.getStatus());
-        objective.setTitle(objectiveRequest.getTitle());
-        objective.setStartDate(objectiveRequest.getStartDate());
-        objective.setEndDate(objectiveRequest.getEndDate());
-
+        // Handle Collaborator entity if needed
+//        if (objectiveRequest.getCollaboratorId() != null) {
+//            Collaborator collaborator = collaboratorRepository.findById(objectiveRequest.getCollaboratorId())
+//                    .orElseThrow(() -> new EntityNotFoundException("Collaborator not found"));
+//            objective.setCollaborator(collaborator);
+//        }
 
         return ObjectiveMapper.INSTANCE.objectiveToObjectiveResponse
                 (objectiveRepository.save(objective));
@@ -168,7 +168,7 @@ public class ObjectiveServiceImpl implements ObjectiveService {
     }
 
     @Override
-    public Map<String, Object> searchByStartDateAndEndDateBetween(LocalDate startDate, LocalDate endDate, Pageable pageable) {
+    public Map<String, Object> searchByStartDateAndEndDateBetween(Date startDate, Date endDate, Pageable pageable) {
         List<ObjectiveResponse> responses = new ArrayList<>();
 
         Page<Objective> objectives = objectiveRepository.findByStartDateAndEndDateBetween(startDate, endDate, pageable);

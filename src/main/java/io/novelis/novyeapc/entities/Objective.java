@@ -2,9 +2,7 @@ package io.novelis.novyeapc.entities;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import io.novelis.novyeapc.entities.enums.InterviewType;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
@@ -12,10 +10,11 @@ import javax.persistence.*;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import java.io.Serializable;
-import java.time.LocalDate;
+import java.util.Date;
 
 @Entity
-@Data
+@Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 public class Objective implements Serializable {
@@ -44,14 +43,19 @@ public class Objective implements Serializable {
     private String status;
 
     @Column(nullable = false)
-    private LocalDate startDate;
+    private Date startDate;
 
     @Column(nullable = false)
-    private LocalDate endDate;
+    private Date endDate;
 
     @ManyToOne
     @JoinColumn(name = "collaborator_id", nullable = false)
     @JsonBackReference(value="collaborator-objective")
     @OnDelete(action = OnDeleteAction.CASCADE)
     private Collaborator collaborator;
+
+    @ManyToOne
+    @JoinColumn(name = "interview_id")
+    @JsonBackReference(value="interview-objective")
+    private Interview interview;
 }
