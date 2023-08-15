@@ -24,7 +24,7 @@ public class Quiz {
     @Column(nullable = false)
     private String question;
 
-    @Column(nullable = false)
+    @Column(nullable = true)
     private String answer;
 
     @ManyToOne

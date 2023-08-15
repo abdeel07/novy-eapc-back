@@ -6,6 +6,7 @@ import io.novelis.novyeapc.models.responses.ObjectiveResponse;
 import org.springframework.data.domain.Pageable;
 
 import java.time.LocalDate;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -17,7 +18,7 @@ public interface ObjectiveService {
 
     ObjectiveResponse get(Long id);
 
-    ObjectiveResponse update(Long id, ObjectiveRequest objectiveRequest);
+    ObjectiveResponse update(Long id, ObjectiveRequest objectiveRequest) throws Exception;
 
     void delete(Long id);
 
@@ -29,5 +30,5 @@ public interface ObjectiveService {
 
     Map<String, Object> searchByYear(int year, Pageable pageable);
 
-    Map<String, Object> searchByStartDateAndEndDateBetween(LocalDate startDate, LocalDate endDate, Pageable pageable);
+    Map<String, Object> searchByStartDateAndEndDateBetween(Date startDate, Date endDate, Pageable pageable);
 }

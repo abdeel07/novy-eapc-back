@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.time.LocalDate;
+import java.util.Date;
 import java.util.Map;
 
 @RestController
@@ -62,7 +63,7 @@ public class ObjectiveController {
     public ResponseEntity<ObjectiveResponse> update(
             @PathVariable Long id,
             @RequestBody @Valid ObjectiveRequest objectiveRequest
-    ){
+    ) throws Exception {
         ObjectiveResponse objectiveResponse = objectiveService.update(id, objectiveRequest);
 
         return new ResponseEntity<>(objectiveResponse, HttpStatus.OK);
@@ -72,8 +73,8 @@ public class ObjectiveController {
     public  ResponseEntity<Map<String, Object>> StartDateAndEndDate(
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "5") int size,
-            @RequestParam(defaultValue = "") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate startDate,
-            @RequestParam(defaultValue = "") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate endDate){
+            @RequestParam(defaultValue = "") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) Date startDate,
+            @RequestParam(defaultValue = "") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) Date endDate){
 
         Pageable pageable = PageRequest.of(page, size);
 
