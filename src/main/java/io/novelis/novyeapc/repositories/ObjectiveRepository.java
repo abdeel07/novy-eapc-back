@@ -18,8 +18,9 @@ public interface ObjectiveRepository extends JpaRepository<Objective,Long> {
 
     Page<Objective> findByInterviewType(InterviewType interviewType, Pageable pageable);
 
-    @Query("SELECT o FROM Objective o WHERE o.collaborator.id = :collaboratorId AND o.interviewType = :interviewType AND YEAR(o.endDate) = :year")
-    Page<Objective> findByCollaboratorIdAndInterviewTypeAndYear(Long collaboratorId, InterviewType interviewType,int year, Pageable pageable);
+    @Query("SELECT o FROM Objective o WHERE o.collaborator.id = :collaboratorId AND o.interviewType = :interviewType AND YEAR(o.endDate) = :year AND o.interview.id IS NULL")
+    Page<Objective> findByCollaboratorIdAndInterviewTypeAndYear(Long collaboratorId, InterviewType interviewType, int year, Pageable pageable);
+
 
     @Query("SELECT o FROM Objective o WHERE o.startDate BETWEEN :startDate AND :endDate AND o.endDate BETWEEN :startDate AND :endDate")
     Page<Objective> findByStartDateAndEndDateBetween(Date startDate, Date endDate, Pageable pageable);

@@ -21,12 +21,13 @@ public interface QuizMapper {
     InterviewMapper interviewMapper = InterviewMapper.INSTANCE;
 //    @Mapping(target = "interview" ,source = "interview")
     Quiz quizRequestToQuiz(QuizRequest quizRequest);
-    @Mapping(target = "interviewResponse", source = "interview")
+
+    @Mapping(source = "interview.id", target = "interviewId")
     QuizResponse quizToQuizResponse(Quiz quiz);
 
     List<QuizResponse> mapQuiz(List<Quiz> quizzes);
     Set<QuizResponse> quizSetToQuizResponseSet(Set<Quiz> set);
-    @Mapping(target = "fulfillments" ,ignore = true)
+   /* @Mapping(target = "fulfillments" ,ignore = true)
     @Mapping(target = "quizzes",ignore = true)
-    InterviewResponse interviewToInterviewResponse(Interview interview);
+    InterviewResponse interviewToInterviewResponse(Interview interview);*/
 }

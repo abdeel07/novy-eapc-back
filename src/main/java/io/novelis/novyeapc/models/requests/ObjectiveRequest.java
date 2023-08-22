@@ -13,6 +13,7 @@ import java.util.Date;
 @NoArgsConstructor
 @AllArgsConstructor
 public class ObjectiveRequest {
+    private Long id;
 
     private String title;
 

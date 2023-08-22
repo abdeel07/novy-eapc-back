@@ -18,5 +18,5 @@ public class QuizResponse {
 
     private String answer;
 
-    private InterviewResponse interviewResponse;
+    private Long interviewId;
 }
