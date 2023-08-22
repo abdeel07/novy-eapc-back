@@ -94,16 +94,28 @@ public class ObjectiveController {
                 (objectiveService.searchByYear(year, pageable), HttpStatus.OK);
     }
 
-    @GetMapping("collaborator")
+    @GetMapping("collaborator/{id}")
     public  ResponseEntity<Map<String, Object>> getByCollaboratorId(
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "5") int size,
-            @RequestParam(defaultValue = "") Long id){
+            @PathVariable(value = "") Long id){
 
         Pageable pageable = PageRequest.of(page, size);
 
         return new ResponseEntity<>
                 (objectiveService.searchByCollaboratorId(id, pageable), HttpStatus.OK);
+    }
+
+    @GetMapping("collaborator")
+    public  ResponseEntity<Map<String, Object>> getByCollaboratorName(
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "5") int size,
+            @RequestParam(defaultValue = "") String name){
+
+        Pageable pageable = PageRequest.of(page, size);
+
+        return new ResponseEntity<>
+                (objectiveService.searchByCollaboratorName(name, pageable), HttpStatus.OK);
     }
 
     @GetMapping("interview-type")

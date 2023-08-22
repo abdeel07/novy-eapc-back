@@ -119,6 +119,23 @@ public class ObjectiveServiceImpl implements ObjectiveService {
     }
 
     @Override
+    public Map<String, Object> searchByCollaboratorName(String name, Pageable pageable) {
+        List<ObjectiveResponse> responses = new ArrayList<>();
+
+        Page<Objective> objectives = objectiveRepository.findByCollaboratorNameContainingIgnoreCase(name, pageable);
+
+        responses = ObjectiveMapper.INSTANCE.mapObjective(objectives.toList());
+
+        Map<String, Object> page = new HashMap<>();
+        page.put("content", responses);
+        page.put("currentPage", objectives.getNumber());
+        page.put("totalElements", objectives.getTotalElements());
+        page.put("totalPages", objectives.getTotalPages());
+
+        return page;
+    }
+
+    @Override
     public Map<String, Object> searchByInterviewType(InterviewType interviewType, Pageable pageable) {
         List<ObjectiveResponse> responses = new ArrayList<>();
 

@@ -16,6 +16,9 @@ public interface ObjectiveRepository extends JpaRepository<Objective,Long> {
 
     Page<Objective> findByCollaboratorId(Long collaboratorId, Pageable pageable);
 
+    @Query("SELECT o FROM Objective o WHERE o.collaborator.lastName LIKE %:name% OR o.collaborator.firstName LIKE %:name%")
+    Page<Objective> findByCollaboratorNameContainingIgnoreCase(String name, Pageable pageable);
+
     Page<Objective> findByInterviewType(InterviewType interviewType, Pageable pageable);
 
     @Query("SELECT o FROM Objective o WHERE o.collaborator.id = :collaboratorId AND o.interviewType = :interviewType AND YEAR(o.endDate) = :year AND o.interview.id IS NULL")
