@@ -10,6 +10,7 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 public class FulfillmentRequest {
+    private Long id;
 
     private String title;
 

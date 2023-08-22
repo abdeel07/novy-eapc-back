@@ -22,15 +22,15 @@ public interface FulfillmentMapper {
 
     @Mapping(target = "interview.id", source="interviewId")
     Fulfillment fulfillmentRequestToFulfillment(FulfillmentRequest fulfillmentRequest);
-    @Mapping(target = "interview", source = "interview")
 
+    @Mapping(source = "interview.id", target = "interviewId")
     FulfillmentResponse fulfillmentToFulfillmentResponse(Fulfillment fulfillment);
 
     List<FulfillmentResponse> mapFulfillment(List<Fulfillment> fulfillments);
     Set<FulfillmentResponse> fulfillmentSetToFulfillmentResponseSet(Set<Fulfillment> set);
-    @Mapping(target = "fulfillments" ,ignore = true)
+   /* @Mapping(target = "fulfillments" ,ignore = true)
     @Mapping(target = "quizzes",ignore = true)
 
-    InterviewResponse interviewToInterviewResponse(Interview interview);
+    InterviewResponse interviewToInterviewResponse(Interview interview);*/
 
 }

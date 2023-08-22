@@ -76,6 +76,7 @@ public class ObjectiveServiceImpl implements ObjectiveService {
             return null;
 
         Objective objective = ObjectiveMapper.INSTANCE.objectiveRequestToObjective(objectiveRequest);
+        System.out.println(objective.getTitle());
         objective.setId(id);
 
         // Handle Collaborator entity if needed

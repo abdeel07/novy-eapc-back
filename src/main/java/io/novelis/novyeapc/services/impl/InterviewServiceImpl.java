@@ -60,8 +60,6 @@ public class InterviewServiceImpl implements InterviewService {
         Interview interview = InterviewMapper.INSTANCE.interviewRequestToInterview(interviewRequest);
         Collaborator collaborator = collaboratorRepository.findById(interviewRequest.getCollaboratorId()).get();
         interview.setCollaborator(collaborator);
-        System.out.println(collaborator.getId());
-        System.out.println(interview.getFulfillments());
         Interview savedInterview = interviewRepository.save(interview);
 
         if (interviewRequest.getFulfillments() != null) {
@@ -84,7 +82,7 @@ public class InterviewServiceImpl implements InterviewService {
 
             }
         }
-        System.out.println(interviewRequest.getObjectivesId());
+
         if (interviewRequest.getObjectivesId() != null) {
             for (Long objectiveId : interviewRequest.getObjectivesId()) {
                 Objective objective = objectiveRepository.findById(objectiveId).get();
@@ -109,16 +107,63 @@ public class InterviewServiceImpl implements InterviewService {
 
     @Override
     public InterviewResponse update(Long id, InterviewRequest interviewRequest) {
-        Optional<Interview> interview = interviewRepository.findById(id);
+        Optional<Interview> interviewExist = interviewRepository.findById(id);
 
-        if (!interview.isPresent())
+        if (!interviewExist.isPresent())
             throw new ResourceNotFoundException(id + "doesn't exist !");
+        Interview interview = InterviewMapper.INSTANCE.interviewRequestToInterview(interviewRequest);
+        Collaborator collaborator = collaboratorRepository.findById(interviewRequest.getCollaboratorId()).get();
+        interview.setCollaborator(collaborator);
+        interview.setId(id);
+        Interview updatedInterview = interviewRepository.save(interview);
 
-        interview.get().setType(interviewRequest.getType());
-        interview.get().setDate(interviewRequest.getDate());
+        if (interviewRequest.getFulfillments() != null) {
+            for (FulfillmentRequest fulfillmentRequest : interviewRequest.getFulfillments()) {
+                Long fulfillmentId = fulfillmentRequest.getId();
+
+                if (fulfillmentId != null) {
+                    Fulfillment fulfillment = fulfillmentRepository.findById(fulfillmentId).orElse(null);
+
+                    if (fulfillment != null) {
+                        fulfillment.setTitle(fulfillmentRequest.getTitle());
+                        fulfillmentRepository.save(fulfillment);
+                    }
+                } else {
+                    Fulfillment fulfillment = new Fulfillment();
+                    fulfillment.setInterview(updatedInterview);
+                    fulfillment.setComment(fulfillmentRequest.getComment());
+                    fulfillment.setTitle(fulfillmentRequest.getTitle());
+                    fulfillmentRepository.save(fulfillment);
+                }
+            }
+        }
+
+        if (interviewRequest.getQuizzes() != null) {
+            for (QuizRequest quizRequest : interviewRequest.getQuizzes()) {
+                Long quizId=quizRequest.getId();
+                if (quizId != null) {
+                    Quiz quiz = quizRepository.findById(quizId).orElse(null);
+
+                    if (quiz != null) {
+                        quiz.setQuestion(quizRequest.getQuestion());
+                        quizRepository.save(quiz);
+                    }
+                } else {
+                    Quiz quiz = new Quiz();
+                    quiz.setInterview(updatedInterview);
+                    quiz.setAnswer(quizRequest.getAnswer());
+                    quiz.setQuestion(quizRequest.getQuestion());
+                    quizRepository.save(quiz);
+                }
+
+            }
+        }
+
+
 
         return InterviewMapper.INSTANCE.interviewToInterviewResponse
-                (interviewRepository.save(interview.get()));
+                (updatedInterview);
+
     }
 
     @Override
