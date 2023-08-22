@@ -39,8 +39,9 @@ public interface InterviewMapper {
 
     @Mapping(source = "collaborator.id", target = "collaboratorId")
     @Mapping(source = "objectives", target = "objectives")
-    @Mapping( target = "fulfillments",ignore = true)
-    @Mapping(target = "quizzes",ignore = true)
+    @Mapping( target = "fulfillments",source="fulfillments")
+
+    @Mapping(target = "quizzes",source = "quizzes")
     @Mapping(source = "collaborator", target = "collaboratorName")
     InterviewResponse interviewToInterviewResponse(Interview interview);
 

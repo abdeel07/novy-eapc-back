@@ -17,5 +17,5 @@ public class FulfillmentResponse {
 
     private String comment;
 
-    private InterviewResponse interview;
+    private Long interviewId;
 }
