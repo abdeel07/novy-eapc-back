@@ -5,7 +5,7 @@ spring:
     name: novy-eapc
   datasource:
     password:
-    url: jdbc:mysql://localhost:3306/novy_eapc?useSSL=false
+    url: jdbc:mysql://127.0.0.1:3306/novy_eapc?useSSL=false
     username: root
   jpa:
     hibernate:

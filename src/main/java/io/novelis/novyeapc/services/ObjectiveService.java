@@ -4,6 +4,7 @@ import io.novelis.novyeapc.entities.enums.InterviewType;
 import io.novelis.novyeapc.models.requests.ObjectiveRequest;
 import io.novelis.novyeapc.models.responses.ObjectiveResponse;
 import org.springframework.data.domain.Pageable;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.time.LocalDate;
 import java.util.Date;
@@ -23,6 +24,8 @@ public interface ObjectiveService {
     void delete(Long id);
 
     Map<String, Object> searchByCollaboratorId(Long collaboratorId, Pageable pageable);
+
+    Map<String, Object> searchByCollaboratorName(String name, int year, Pageable pageable);
 
     Map<String, Object> searchByInterviewType(InterviewType interviewType, Pageable pageable);
 

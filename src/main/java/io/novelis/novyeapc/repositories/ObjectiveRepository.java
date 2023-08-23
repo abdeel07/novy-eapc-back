@@ -8,13 +8,15 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
-import java.time.LocalDate;
 import java.util.Date;
 
 @Repository
 public interface ObjectiveRepository extends JpaRepository<Objective,Long> {
 
     Page<Objective> findByCollaboratorId(Long collaboratorId, Pageable pageable);
+
+    @Query("SELECT o FROM Objective o WHERE YEAR(o.startDate) = :year AND (o.collaborator.lastName LIKE %:name% OR o.collaborator.firstName LIKE %:name%)")
+    Page<Objective> findByCollaboratorNameContainingIgnoreCaseAndYear(String name, int year, Pageable pageable);
 
     Page<Objective> findByInterviewType(InterviewType interviewType, Pageable pageable);
 
