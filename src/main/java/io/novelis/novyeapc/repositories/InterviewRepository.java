@@ -18,4 +18,8 @@ public interface InterviewRepository extends JpaRepository<Interview,Long> {
 
     @Query("SELECT i FROM Interview i WHERE YEAR(i.date) = ?1")
     Page<Interview> findByDate(int year, Pageable pageable);
+
+    @Query("SELECT i FROM Interview i WHERE i.collaborator.id = ?1 AND YEAR(i.date) = ?2")
+    Page<Interview> findByIdAndYear(Long id, int year, Pageable pageable);
+
 }

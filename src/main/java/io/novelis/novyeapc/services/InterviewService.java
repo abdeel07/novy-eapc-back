@@ -23,6 +23,6 @@ public interface InterviewService {
     void delete(Long id);
 
     Map<String, Object> searchByDate(int year, Pageable pageable);
-
+    Map<String, Object>   searchByIdAndDate(Long id, int year,Pageable pageable);
     Map<String, Object> searchByType(InterviewType type, Pageable pageable);
 }
