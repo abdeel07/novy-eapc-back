@@ -87,4 +87,17 @@ public class InterviewController {
 
         return new ResponseEntity<>(interviewService.searchByDate(year, pageable), HttpStatus.OK);
     }
+
+    @GetMapping("collaborator/{id}")
+    public ResponseEntity<Map<String, Object>> findByIdAndDate(
+            @PathVariable Long id,
+            @RequestParam(defaultValue = "2023") int year,
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "2") int size
+    ) {
+
+        Pageable pageable = PageRequest.of(page, size);
+
+        return new ResponseEntity<>(interviewService.searchByIdAndDate(id,year, pageable), HttpStatus.OK);
+    }
 }

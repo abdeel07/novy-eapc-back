@@ -194,6 +194,23 @@ public class InterviewServiceImpl implements InterviewService {
     }
 
     @Override
+    public Map<String, Object> searchByIdAndDate(Long id, int year, Pageable pageable) {
+        List<InterviewResponse> responses = new ArrayList<>();
+
+        Page<Interview> interviews = interviewRepository.findByIdAndYear(id,year,pageable);
+
+        responses = InterviewMapper.INSTANCE.mapInterview(interviews.toList());
+
+        Map<String, Object> page = new HashMap<>();
+        page.put("content", responses);
+        page.put("currentPage", interviews.getNumber());
+        page.put("totalElements", interviews.getTotalElements());
+        page.put("totalPages", interviews.getTotalPages());
+
+        return page;
+    }
+
+    @Override
     public Map<String, Object> searchByType(InterviewType type, Pageable pageable) {
         List<InterviewResponse> responses = new ArrayList<>();
 

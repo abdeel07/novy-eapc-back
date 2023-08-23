@@ -54,7 +54,7 @@ public class Objective implements Serializable {
     @OnDelete(action = OnDeleteAction.CASCADE)
     private Collaborator collaborator;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "interview_id")
     @JsonBackReference(value="interview-objective")
     private Interview interview;
