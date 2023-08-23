@@ -25,7 +25,7 @@ public interface ObjectiveService {
 
     Map<String, Object> searchByCollaboratorId(Long collaboratorId, Pageable pageable);
 
-    Map<String, Object> searchByCollaboratorName(String name, Pageable pageable);
+    Map<String, Object> searchByCollaboratorName(String name, int year, Pageable pageable);
 
     Map<String, Object> searchByInterviewType(InterviewType interviewType, Pageable pageable);
 

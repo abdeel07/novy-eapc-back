@@ -119,10 +119,10 @@ public class ObjectiveServiceImpl implements ObjectiveService {
     }
 
     @Override
-    public Map<String, Object> searchByCollaboratorName(String name, Pageable pageable) {
+    public Map<String, Object> searchByCollaboratorName(String name, int year, Pageable pageable) {
         List<ObjectiveResponse> responses = new ArrayList<>();
 
-        Page<Objective> objectives = objectiveRepository.findByCollaboratorNameContainingIgnoreCase(name, pageable);
+        Page<Objective> objectives = objectiveRepository.findByCollaboratorNameContainingIgnoreCaseAndYear(name, year, pageable);
 
         responses = ObjectiveMapper.INSTANCE.mapObjective(objectives.toList());
 

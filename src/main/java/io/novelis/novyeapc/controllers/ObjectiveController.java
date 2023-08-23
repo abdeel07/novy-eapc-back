@@ -110,12 +110,13 @@ public class ObjectiveController {
     public  ResponseEntity<Map<String, Object>> getByCollaboratorName(
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "5") int size,
-            @RequestParam(defaultValue = "") String name){
+            @RequestParam(defaultValue = "") String name,
+            @RequestParam() int year){
 
         Pageable pageable = PageRequest.of(page, size);
 
         return new ResponseEntity<>
-                (objectiveService.searchByCollaboratorName(name, pageable), HttpStatus.OK);
+                (objectiveService.searchByCollaboratorName(name, year, pageable), HttpStatus.OK);
     }
 
     @GetMapping("interview-type")
@@ -135,7 +136,7 @@ public class ObjectiveController {
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "5") int size,
             @RequestParam(defaultValue = "") Long id,
-            @RequestParam(value = "year") int year,
+            @RequestParam() int year,
             @RequestParam(defaultValue = "") InterviewType interviewType){
 
         Pageable pageable = PageRequest.of(page, size);
