@@ -14,9 +14,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.time.LocalDate;
 import java.util.Date;
 import java.util.Map;
+import java.util.Set;
 
 @RestController
 @RequestMapping("/api/objective/")
@@ -143,5 +143,21 @@ public class ObjectiveController {
 
         return new ResponseEntity<>
                 (objectiveService.searchByCollaboratorIdAndInterviewTypeAndYear(id, interviewType,year, pageable), HttpStatus.OK);
+    }
+
+    @GetMapping("filters")
+    public  ResponseEntity<Map<String, Object>> getByAllFilters(
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "5") int size,
+            @RequestParam(defaultValue = "") String name,
+            @RequestParam(defaultValue = "0") int year,
+            @RequestParam(defaultValue = "*") Set<InterviewType> interviewTypes,
+            @RequestParam(defaultValue = "*") Set<String> status,
+            @RequestParam(defaultValue = "*") Set<Long> collaboratorsId){
+
+        Pageable pageable = PageRequest.of(page, size);
+
+        return new ResponseEntity<>
+                (objectiveService.searchByAllAttributes(name, year, interviewTypes, status, collaboratorsId, pageable), HttpStatus.OK);
     }
 }
