@@ -53,9 +53,11 @@ public class QuizServiceImpl implements QuizService {
                 new ResourceNotFoundException("interview "+id+"not found"));
 
         quiz.setAnswer(quizRequest.getAnswer());
-        quiz.setAnswer(quizRequest.getQuestion());
+        quiz.setQuestion(quizRequest.getQuestion());
+        System.out.println(quizRequest.getAnswer());
         Quiz quiz1=quizRepository.save(quiz);
         QuizResponse quizResponse=mapper.quizToQuizResponse(quiz1);
+        System.out.println(quiz1.getAnswer());
         return  quizResponse;
     }
 

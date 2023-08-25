@@ -34,6 +34,8 @@ public class InterviewServiceImpl implements InterviewService {
     @Autowired
     ObjectiveRepository objectiveRepository;
 
+    @Autowired
+    NotificationRepository notificationRepository;
     @Override
     public Map<String, Object> getAll(Pageable pageable) {
         List<InterviewResponse> responses = new ArrayList<>();
@@ -79,6 +81,7 @@ public class InterviewServiceImpl implements InterviewService {
                 quizRepository.save(quiz);
 
             }
+
         }
 
         if (interviewRequest.getObjectivesId() != null) {
@@ -90,6 +93,15 @@ public class InterviewServiceImpl implements InterviewService {
 
             }
         }
+        Notification notification=new Notification();
+        notification.setCollaborator(collaborator);
+        notification.setDate(new Date());
+        if(interviewRequest.getType().equals("Performance")){
+            notification.setMessage("vous avez des questions à répondre sur l'entretien de performance");
+        }else {
+            notification.setMessage("vous avez des questions à répondre sur l'entretien d'évaluation");
+        }
+        notificationRepository.save(notification);
         return InterviewMapper.INSTANCE.interviewToInterviewResponse
                 (savedInterview);
     }
