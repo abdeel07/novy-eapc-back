@@ -10,6 +10,7 @@ import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 public interface ObjectiveService {
 
@@ -34,4 +35,11 @@ public interface ObjectiveService {
     Map<String, Object> searchByYear(int year, Pageable pageable);
 
     Map<String, Object> searchByStartDateAndEndDateBetween(Date startDate, Date endDate, Pageable pageable);
+
+    Map<String, Object> searchByAllAttributes(String name,
+                                              int year,
+                                              Set<InterviewType> interviewTypes,
+                                              Set<String> status,
+                                              Set<Long> collaboratorsId,
+                                              Pageable pageable);
 }
