@@ -1,33 +1,31 @@
 package io.novelis.novyeapc.controllers;
 
+import io.novelis.novyeapc.entities.Interview;
 import io.novelis.novyeapc.models.requests.FulfillmentRequest;
+import io.novelis.novyeapc.models.requests.QuizRequest;
 import io.novelis.novyeapc.models.responses.FulfillmentResponse;
+import io.novelis.novyeapc.models.responses.QuizResponse;
+import io.novelis.novyeapc.services.InterviewService;
 import io.novelis.novyeapc.services.impl.FulfillmentServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/api/fulfillments/")
 @CrossOrigin(origins = { "http://localhost:3000" })
 public class FulfillmentController {
     @Autowired
     FulfillmentServiceImpl fulfillmentService;
-    @PostMapping("/interview/{interview_id}/fulfillment")
-    public ResponseEntity<FulfillmentResponse> addFulfillment(@PathVariable(value = "interview_id") Long interview_id, @RequestBody FulfillmentRequest fulfillment){
 
-//            fulfillment.setInterviewResponse(interviewResponse);
-         FulfillmentResponse fulfillmentResponse=fulfillmentService.add(fulfillment);
-        return new ResponseEntity<>(fulfillmentResponse, HttpStatus.CREATED);
-    }
+
     @GetMapping("/interview/{interview_id}/fulfillment")
     public ResponseEntity<List<FulfillmentResponse> > getFulfillment(@PathVariable(value = "interview_id") Long interview_id){
-//        if(!interviewService.existsById(interview_id)){
-//            throw new ResourceNotFoundException("not found interview  with id "+interview_id);
-//        }
+
         List<FulfillmentResponse> fulfillmentResponses=fulfillmentService.getAll(interview_id);
 
 
@@ -57,6 +55,13 @@ public class FulfillmentController {
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
 
     }
+    @PostMapping("{interview_id}")
+    public ResponseEntity<List<FulfillmentResponse>> addFulfillments(@PathVariable Long interview_id,@RequestBody ArrayList<FulfillmentRequest> fulfillmentRequests){
+        List<FulfillmentResponse> fulfillmentResponses = fulfillmentService.add(interview_id,fulfillmentRequests);
+
+        return new ResponseEntity<>(fulfillmentResponses, HttpStatus.OK);
+    }
+
 
 
 }

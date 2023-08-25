@@ -11,6 +11,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -63,6 +64,18 @@ public class QuizController {
         return new ResponseEntity<>(quizResponse, HttpStatus.OK);
 
     }
+    @PutMapping("")
+    public ResponseEntity<List<QuizResponse>> updateQuizzes(@RequestBody List<QuizRequest> quizRequests){
+        List<QuizResponse> quizResponses = new ArrayList<>();
+
+        for (QuizRequest quizRequest : quizRequests) {
+
+            QuizResponse quizResponse = quizService.update(quizRequest.getId(), quizRequest);
+            quizResponses.add(quizResponse);
+        }
+        return new ResponseEntity<>(quizResponses, HttpStatus.OK);
+    }
+
     @DeleteMapping("/quiz/{quiz_id}")
     public ResponseEntity<HttpStatus> deleteQuiz(@PathVariable(value = "quiz_id") Long quiz_id){
 

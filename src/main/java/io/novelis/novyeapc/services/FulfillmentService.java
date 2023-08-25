@@ -5,6 +5,7 @@ import io.novelis.novyeapc.models.requests.FulfillmentRequest;
 import io.novelis.novyeapc.models.responses.FulfillmentResponse;
 import org.springframework.http.ResponseEntity;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public interface FulfillmentService {
@@ -12,7 +13,9 @@ public interface FulfillmentService {
     List<FulfillmentResponse> getAll(Long id);
     List<FulfillmentResponse> getAll();
 
-    FulfillmentResponse add(FulfillmentRequest fulfillmentRequest);
+
+
+    List<FulfillmentResponse> add(Long id, ArrayList<FulfillmentRequest> fulfillmentRequests);
 
     FulfillmentResponse get(Long id);
 
