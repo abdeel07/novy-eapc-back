@@ -9,6 +9,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import java.util.Date;
+import java.util.Set;
 
 @Repository
 public interface ObjectiveRepository extends JpaRepository<Objective,Long> {
@@ -23,10 +24,21 @@ public interface ObjectiveRepository extends JpaRepository<Objective,Long> {
     @Query("SELECT o FROM Objective o WHERE o.collaborator.id = :collaboratorId AND o.interviewType = :interviewType AND YEAR(o.endDate) = :year AND o.interview.id IS NULL")
     Page<Objective> findByCollaboratorIdAndInterviewTypeAndYear(Long collaboratorId, InterviewType interviewType, int year, Pageable pageable);
 
-
     @Query("SELECT o FROM Objective o WHERE o.startDate BETWEEN :startDate AND :endDate AND o.endDate BETWEEN :startDate AND :endDate")
     Page<Objective> findByStartDateAndEndDateBetween(Date startDate, Date endDate, Pageable pageable);
 
     @Query("SELECT o FROM Objective o WHERE YEAR(o.startDate) = ?1 OR YEAR(o.endDate) = ?1")
     Page<Objective> findByDate(int year, Pageable pageable);
+
+    @Query("SELECT o FROM Objective o WHERE YEAR(o.startDate) = :year " +
+            "AND (o.collaborator.lastName LIKE %:name% OR o.collaborator.firstName LIKE %:name%) " +
+            "AND ( o.interviewType IN :interviewTypes) " +
+            "AND ( o.status IN :status) " +
+            "AND (o.collaborator.id IN :collaboratorsId  )")
+    Page<Objective> findByAllAttributes(String name,
+                                        int year,
+                                        Set<InterviewType> interviewTypes,
+                                        Set<String> status,
+                                        Set<Long> collaboratorsId,
+                                        Pageable pageable);
 }

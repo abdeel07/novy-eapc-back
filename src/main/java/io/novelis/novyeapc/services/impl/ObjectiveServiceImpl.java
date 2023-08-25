@@ -11,12 +11,10 @@ import io.novelis.novyeapc.repositories.InterviewRepository;
 import io.novelis.novyeapc.repositories.ObjectiveRepository;
 import io.novelis.novyeapc.services.ObjectiveService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.crossstore.ChangeSetPersister;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDate;
 import java.util.*;
 
 @Service
@@ -191,6 +189,23 @@ public class ObjectiveServiceImpl implements ObjectiveService {
         List<ObjectiveResponse> responses = new ArrayList<>();
 
         Page<Objective> objectives = objectiveRepository.findByStartDateAndEndDateBetween(startDate, endDate, pageable);
+
+        responses = ObjectiveMapper.INSTANCE.mapObjective(objectives.toList());
+
+        Map<String, Object> page = new HashMap<>();
+        page.put("content", responses);
+        page.put("currentPage", objectives.getNumber());
+        page.put("totalElements", objectives.getTotalElements());
+        page.put("totalPages", objectives.getTotalPages());
+
+        return page;
+    }
+
+    @Override
+    public Map<String, Object> searchByAllAttributes(String name, int year, Set<InterviewType> interviewTypes, Set<String> status, Set<Long> collaboratorsId, Pageable pageable) {
+        List<ObjectiveResponse> responses = new ArrayList<>();
+
+        Page<Objective> objectives = objectiveRepository.findByAllAttributes(name, year, interviewTypes, status, collaboratorsId, pageable);
 
         responses = ObjectiveMapper.INSTANCE.mapObjective(objectives.toList());
 
