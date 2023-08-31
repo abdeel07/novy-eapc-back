@@ -236,4 +236,28 @@ public class InterviewServiceImpl implements InterviewService {
 
         return page;
     }
+
+    @Override
+    public Map<String, Object> searchByAllAttributes(String name, int year, Set<InterviewType> interviewTypes, Set<Long> collaboratorsId, Pageable pageable) {
+        List<InterviewResponse> responses = new ArrayList<>();
+        if(collaboratorsId.isEmpty()){
+            List<Collaborator> collaborators=collaboratorRepository.findAll();
+            for (Collaborator collaborator:collaborators
+            ) {
+                collaboratorsId.add(collaborator.getId());
+            }
+        }
+
+        Page<Interview> interviews = interviewRepository.findByAllAttributes(name, year, interviewTypes,collaboratorsId, pageable);
+
+        responses = InterviewMapper.INSTANCE.mapInterview(interviews.toList());
+
+        Map<String, Object> page = new HashMap<>();
+        page.put("content", responses);
+        page.put("currentPage", interviews.getNumber());
+        page.put("totalElements", interviews.getTotalElements());
+        page.put("totalPages", interviews.getTotalPages());
+
+        return page;
+    }
 }

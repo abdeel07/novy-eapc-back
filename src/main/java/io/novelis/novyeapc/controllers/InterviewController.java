@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.text.ParseException;
 import java.util.Map;
+import java.util.Set;
 
 @RestController
 @RequestMapping("/api/interview/")
@@ -99,5 +100,19 @@ public class InterviewController {
         Pageable pageable = PageRequest.of(page, size);
 
         return new ResponseEntity<>(interviewService.searchByIdAndDate(id,year, pageable), HttpStatus.OK);
+    }
+    @GetMapping("filters")
+    public  ResponseEntity<Map<String, Object>> getByAllFilters(
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "5") int size,
+            @RequestParam(defaultValue = "") String name,
+            @RequestParam(defaultValue = "0") int year,
+            @RequestParam(defaultValue = "Performance,Increase") Set<InterviewType> interviewTypes,
+            @RequestParam(defaultValue = "") Set<Long> collaboratorsId){
+
+        Pageable pageable = PageRequest.of(page, size);
+        Set<InterviewType> interviewTypesParam = interviewTypes.isEmpty() ? null : interviewTypes;
+        return new ResponseEntity<>
+                (interviewService.searchByAllAttributes(name, year, interviewTypesParam,collaboratorsId, pageable), HttpStatus.OK);
     }
 }

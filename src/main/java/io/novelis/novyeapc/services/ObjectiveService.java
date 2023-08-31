@@ -24,7 +24,7 @@ public interface ObjectiveService {
 
     void delete(Long id);
 
-    Map<String, Object> searchByCollaboratorId(Long collaboratorId, Pageable pageable);
+    Map<String, Object> searchByCollaboratorId(Long collaboratorId,int year, Pageable pageable);
 
     Map<String, Object> searchByCollaboratorName(String name, int year, Pageable pageable);
 

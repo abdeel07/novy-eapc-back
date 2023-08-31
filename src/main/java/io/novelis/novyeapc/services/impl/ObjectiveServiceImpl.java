@@ -100,10 +100,10 @@ public class ObjectiveServiceImpl implements ObjectiveService {
     }
 
     @Override
-    public Map<String, Object> searchByCollaboratorId(Long collaboratorId, Pageable pageable) {
+    public Map<String, Object> searchByCollaboratorId(Long collaboratorId,int year, Pageable pageable) {
         List<ObjectiveResponse> responses = new ArrayList<>();
 
-        Page<Objective> objectives = objectiveRepository.findByCollaboratorId(collaboratorId, pageable);
+        Page<Objective> objectives = objectiveRepository.findByCollaboratorId(collaboratorId, year, pageable);
 
         responses = ObjectiveMapper.INSTANCE.mapObjective(objectives.toList());
 
@@ -204,6 +204,13 @@ public class ObjectiveServiceImpl implements ObjectiveService {
     @Override
     public Map<String, Object> searchByAllAttributes(String name, int year, Set<InterviewType> interviewTypes, Set<String> status, Set<Long> collaboratorsId, Pageable pageable) {
         List<ObjectiveResponse> responses = new ArrayList<>();
+        if(collaboratorsId.isEmpty()){
+            List<Collaborator> collaborators=collaboratorRepository.findAll();
+            for (Collaborator collaborator:collaborators
+            ) {
+                collaboratorsId.add(collaborator.getId());
+            }
+        }
 
         Page<Objective> objectives = objectiveRepository.findByAllAttributes(name, year, interviewTypes, status, collaboratorsId, pageable);
 
