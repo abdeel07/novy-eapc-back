@@ -98,12 +98,13 @@ public class ObjectiveController {
     public  ResponseEntity<Map<String, Object>> getByCollaboratorId(
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "5") int size,
+            @RequestParam(defaultValue = "2023") int year,
             @PathVariable(value = "") Long id){
 
         Pageable pageable = PageRequest.of(page, size);
 
         return new ResponseEntity<>
-                (objectiveService.searchByCollaboratorId(id, pageable), HttpStatus.OK);
+                (objectiveService.searchByCollaboratorId(id,year, pageable), HttpStatus.OK);
     }
 
     @GetMapping("collaborator")
@@ -151,13 +152,15 @@ public class ObjectiveController {
             @RequestParam(defaultValue = "5") int size,
             @RequestParam(defaultValue = "") String name,
             @RequestParam(defaultValue = "0") int year,
-            @RequestParam(defaultValue = "*") Set<InterviewType> interviewTypes,
-            @RequestParam(defaultValue = "*") Set<String> status,
-            @RequestParam(defaultValue = "*") Set<Long> collaboratorsId){
-
+            @RequestParam(defaultValue = "Performance,Increase") Set<InterviewType> interviewTypes,
+            @RequestParam(defaultValue = "En cours,Accepté,Refusé") Set<String> status,
+            @RequestParam(defaultValue = "") Set<Long> collaboratorsId){
+        System.out.println(status.size());
+        System.out.println(name);
         Pageable pageable = PageRequest.of(page, size);
-
+        Set<InterviewType> interviewTypesParam = interviewTypes.isEmpty() ? null : interviewTypes;
+        Set<String> statusParam = status.isEmpty() ? null : status;
         return new ResponseEntity<>
-                (objectiveService.searchByAllAttributes(name, year, interviewTypes, status, collaboratorsId, pageable), HttpStatus.OK);
+                (objectiveService.searchByAllAttributes(name, year, interviewTypesParam, statusParam, collaboratorsId, pageable), HttpStatus.OK);
     }
 }
